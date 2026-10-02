@@ -1,0 +1,103 @@
+<script type="text/javascript">
+  RED.nodes.registerType("doc-cheap-recognize", {
+    category: "doc.cheap",
+    color: "#7dd3fc",
+    defaults: {
+      name: { value: "" },
+      server: { value: "", type: "doc-cheap-config", required: true },
+      expectCountry: { value: "" },
+      returnPortrait: { value: true },
+      retainHours: { value: "" },
+      reference: { value: "" },
+      idempotencyKey: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "doc-cheap.svg",
+    paletteLabel: "recognize",
+    label: function () {
+      return this.name || "recognize document";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="doc-cheap-recognize">
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-key"></i> Account</label>
+    <input type="text" id="node-input-server" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-expectCountry"><i class="fa fa-flag"></i> Country</label>
+    <input type="text" id="node-input-expectCountry" placeholder="for example GRC (optional)" maxlength="3" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-returnPortrait"><i class="fa fa-user"></i> Portrait</label>
+    <input type="checkbox" id="node-input-returnPortrait" style="width: auto; vertical-align: top" />
+    <span>Return the holder's photo crop</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-retainHours"><i class="fa fa-clock-o"></i> Keep (hours)</label>
+    <input type="text" id="node-input-retainHours" placeholder="account setting" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-reference"><i class="fa fa-bookmark"></i> Reference</label>
+    <input type="text" id="node-input-reference" placeholder="your own id (optional)" maxlength="128" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-idempotencyKey"><i class="fa fa-repeat"></i> Idempotency</label>
+    <input type="text" id="node-input-idempotencyKey" placeholder="key (optional)" maxlength="255" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="doc-cheap-recognize">
+  <p>
+    Reads a photo or scan of a passport, national ID card or driving licence and returns the
+    printed fields as structured data.
+  </p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">buffer | string</span></dt>
+    <dd>
+      The image (JPEG or PNG): a Buffer, a base64 string, a <code>data:</code> URL, or an
+      <code>http(s)</code> URL that the node downloads first. Images larger than 25 MiB are refused.
+    </dd>
+    <dt class="optional">expectCountry <span class="property-type">string</span></dt>
+    <dd>The country you expect, a three-letter code such as <code>GRC</code>.</dd>
+    <dt class="optional">returnPortrait <span class="property-type">boolean</span></dt>
+    <dd>Whether to return the holder's photo crop.</dd>
+    <dt class="optional">retainHours <span class="property-type">number</span></dt>
+    <dd>How many hours the result can be read back, from 0 to 8760.</dd>
+    <dt class="optional">reference <span class="property-type">string</span></dt>
+    <dd>Your own reference, up to 128 characters, echoed back in the result.</dd>
+    <dt class="optional">idempotencyKey <span class="property-type">string</span></dt>
+    <dd>
+      Sent as the <code>Idempotency-Key</code> header. Sending the same key again returns the first
+      answer instead of charging a second scan.
+    </dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>The scan result: <code>meta</code> (id, status, billed, confidence), the document, the fields, the machine-readable zone and the image crops.</dd>
+  </dl>
+  <h3>Details</h3>
+  <p>
+    A property set on the message overrides the same setting in this dialog. One recognised
+    document costs one credit; an image without a readable document costs nothing, and
+    <code>payload.meta.billed</code> says whether the scan was charged.
+  </p>
+  <p>
+    On a failure the node raises an error that a Catch node receives, and sets
+    <code>msg.error</code> to <code>{ status, code, message }</code>. A 401 or 403 means the API
+    key was refused; a 429 means the rate limit was reached, so try later.
+  </p>
+  <h3>References</h3>
+  <ul>
+    <li><a href="https://doc.cheap/docs/start/first-recognition">Your first recognition</a></li>
+    <li><a href="https://doc.cheap/docs/reference">API reference</a></li>
+  </ul>
+</script>

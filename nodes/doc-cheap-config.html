@@ -1,0 +1,55 @@
+<script type="text/javascript">
+  RED.nodes.registerType("doc-cheap-config", {
+    category: "config",
+    defaults: {
+      name: { value: "" },
+      baseUrl: { value: "https://api.doc.cheap", required: true },
+    },
+    credentials: {
+      apiKey: { type: "password", required: true },
+    },
+    label: function () {
+      return this.name || "doc.cheap";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="doc-cheap-config">
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-config-input-name" placeholder="doc.cheap" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-apiKey"><i class="fa fa-key"></i> API key</label>
+    <input type="password" id="node-config-input-apiKey" placeholder="sk_live_… or sk_sandbox_public" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-baseUrl"><i class="fa fa-globe"></i> Base URL</label>
+    <input type="text" id="node-config-input-baseUrl" placeholder="https://api.doc.cheap" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="doc-cheap-config">
+  <p>The doc.cheap account the operation nodes use.</p>
+  <h3>Properties</h3>
+  <dl class="message-properties">
+    <dt>API key <span class="property-type">string</span></dt>
+    <dd>
+      A live key (<code>sk_live_…</code>) from the doc.cheap cabinet, or the public sandbox key
+      <code>sk_sandbox_public</code> to try the nodes without an account. It is sent as a Bearer
+      token. Node-RED keeps it in its credentials file, so it never appears in the flow JSON or
+      in an export.
+    </dd>
+    <dt>Base URL <span class="property-type">string</span></dt>
+    <dd>Leave it at <code>https://api.doc.cheap</code>.</dd>
+  </dl>
+  <h3>Details</h3>
+  <p>
+    The sandbox key gives 10 free recognised documents per address in all, and at most 10 requests
+    per address an hour, whatever their answer.
+  </p>
+  <h3>References</h3>
+  <ul>
+    <li><a href="https://doc.cheap/docs/concepts/api-keys-and-sessions">API keys</a></li>
+  </ul>
+</script>

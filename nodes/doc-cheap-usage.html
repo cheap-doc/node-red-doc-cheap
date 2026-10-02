@@ -1,0 +1,59 @@
+<script type="text/javascript">
+  RED.nodes.registerType("doc-cheap-usage", {
+    category: "doc.cheap",
+    color: "#7dd3fc",
+    defaults: {
+      name: { value: "" },
+      server: { value: "", type: "doc-cheap-config", required: true },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "doc-cheap.svg",
+    paletteLabel: "usage",
+    label: function () {
+      return this.name || "usage";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="doc-cheap-usage">
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-key"></i> Account</label>
+    <input type="text" id="node-input-server" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="doc-cheap-usage">
+  <p>Reads the account's credit balance and this period's counters.</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">any</span></dt>
+    <dd>Any message starts the request; its content is not used.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>
+      <code>balance_credits</code>, the free allowance (<code>free_allowance</code>), the paid
+      credits (<code>paid_balance_credits</code>), the credits spent and the scan counters of the
+      current calendar month.
+    </dd>
+  </dl>
+  <h3>Details</h3>
+  <p>
+    Reading the balance costs nothing. With the sandbox key there is no account behind the call,
+    so the balance comes back empty (<code>null</code>).
+  </p>
+  <p>
+    On a failure the node raises an error that a Catch node receives, and sets
+    <code>msg.error</code> to <code>{ status, code, message }</code>.
+  </p>
+  <h3>References</h3>
+  <ul>
+    <li><a href="https://doc.cheap/docs/reference">API reference</a></li>
+  </ul>
+</script>

@@ -1,0 +1,214 @@
+[
+  {
+    "id": "d0c0c0c0a0000001",
+    "type": "tab",
+    "label": "doc.cheap operations",
+    "disabled": false,
+    "info": "Open the doc.cheap account node, enter an API key (sk_sandbox_public to try it without an account), deploy, then press the inject buttons. Recognize downloads the image from the URL in its inject node: replace it with a URL of your own document image."
+  },
+  {
+    "id": "d0c0c0c0a00000c0",
+    "type": "doc-cheap-config",
+    "name": "doc.cheap",
+    "baseUrl": "https://api.doc.cheap"
+  },
+  {
+    "id": "d0c0c0c0a0000100",
+    "type": "inject",
+    "z": "d0c0c0c0a0000001",
+    "name": "Recognize an image URL",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "https://example.com/your-document.jpg",
+    "payloadType": "str",
+    "x": 170,
+    "y": 80,
+    "wires": [["d0c0c0c0a0000101"]]
+  },
+  {
+    "id": "d0c0c0c0a0000101",
+    "type": "doc-cheap-recognize",
+    "z": "d0c0c0c0a0000001",
+    "name": "",
+    "server": "d0c0c0c0a00000c0",
+    "expectCountry": "",
+    "returnPortrait": false,
+    "retainHours": "",
+    "reference": "example-flow",
+    "idempotencyKey": "",
+    "x": 420,
+    "y": 80,
+    "wires": [["d0c0c0c0a0000102"]]
+  },
+  {
+    "id": "d0c0c0c0a0000102",
+    "type": "debug",
+    "z": "d0c0c0c0a0000001",
+    "name": "recognize result",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 650,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "d0c0c0c0a0000110",
+    "type": "inject",
+    "z": "d0c0c0c0a0000001",
+    "name": "Get a scan by id",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "00000000-0000-7000-8000-000000000000",
+    "payloadType": "str",
+    "x": 170,
+    "y": 160,
+    "wires": [["d0c0c0c0a0000111"]]
+  },
+  {
+    "id": "d0c0c0c0a0000111",
+    "type": "doc-cheap-get-scan",
+    "z": "d0c0c0c0a0000001",
+    "name": "",
+    "server": "d0c0c0c0a00000c0",
+    "scanId": "",
+    "x": 420,
+    "y": 160,
+    "wires": [["d0c0c0c0a0000112"]]
+  },
+  {
+    "id": "d0c0c0c0a0000112",
+    "type": "debug",
+    "z": "d0c0c0c0a0000001",
+    "name": "get result",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 650,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "d0c0c0c0a0000120",
+    "type": "inject",
+    "z": "d0c0c0c0a0000001",
+    "name": "Delete a scan by id",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "00000000-0000-7000-8000-000000000000",
+    "payloadType": "str",
+    "x": 170,
+    "y": 240,
+    "wires": [["d0c0c0c0a0000121"]]
+  },
+  {
+    "id": "d0c0c0c0a0000121",
+    "type": "doc-cheap-delete-scan",
+    "z": "d0c0c0c0a0000001",
+    "name": "",
+    "server": "d0c0c0c0a00000c0",
+    "scanId": "",
+    "x": 420,
+    "y": 240,
+    "wires": [["d0c0c0c0a0000122"]]
+  },
+  {
+    "id": "d0c0c0c0a0000122",
+    "type": "debug",
+    "z": "d0c0c0c0a0000001",
+    "name": "delete result",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 650,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "d0c0c0c0a0000130",
+    "type": "inject",
+    "z": "d0c0c0c0a0000001",
+    "name": "Read the balance",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 170,
+    "y": 320,
+    "wires": [["d0c0c0c0a0000131"]]
+  },
+  {
+    "id": "d0c0c0c0a0000131",
+    "type": "doc-cheap-usage",
+    "z": "d0c0c0c0a0000001",
+    "name": "",
+    "server": "d0c0c0c0a00000c0",
+    "x": 420,
+    "y": 320,
+    "wires": [["d0c0c0c0a0000132"]]
+  },
+  {
+    "id": "d0c0c0c0a0000132",
+    "type": "debug",
+    "z": "d0c0c0c0a0000001",
+    "name": "usage result",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 650,
+    "y": 320,
+    "wires": []
+  }
+]

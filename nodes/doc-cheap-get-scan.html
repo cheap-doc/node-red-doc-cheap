@@ -1,0 +1,63 @@
+<script type="text/javascript">
+  RED.nodes.registerType("doc-cheap-get-scan", {
+    category: "doc.cheap",
+    color: "#7dd3fc",
+    defaults: {
+      name: { value: "" },
+      server: { value: "", type: "doc-cheap-config", required: true },
+      scanId: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "doc-cheap.svg",
+    paletteLabel: "get scan",
+    label: function () {
+      return this.name || "get scan";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="doc-cheap-get-scan">
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-key"></i> Account</label>
+    <input type="text" id="node-input-server" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-scanId"><i class="fa fa-hashtag"></i> Scan id</label>
+    <input type="text" id="node-input-scanId" placeholder="from the message" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="doc-cheap-get-scan">
+  <p>Reads back a stored scan result.</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt class="optional">scanId <span class="property-type">string</span></dt>
+    <dd>The scan id, used when the node's own Scan id is empty.</dd>
+    <dt class="optional">payload <span class="property-type">string</span></dt>
+    <dd>The scan id, used when neither the node nor <code>msg.scanId</code> gives one.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>The stored scan result, in the same shape as the recognize node returns.</dd>
+  </dl>
+  <h3>Details</h3>
+  <p>
+    A result is stored only when the scan was made with a live key under a non-zero retention
+    window, and only until that window ends. Under the sandbox key nothing is stored, so the
+    answer is "not found". Reading a result costs nothing.
+  </p>
+  <p>
+    On a failure the node raises an error that a Catch node receives, and sets
+    <code>msg.error</code> to <code>{ status, code, message }</code>.
+  </p>
+  <h3>References</h3>
+  <ul>
+    <li><a href="https://doc.cheap/docs/reference">API reference</a></li>
+  </ul>
+</script>

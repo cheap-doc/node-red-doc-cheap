@@ -1,0 +1,53 @@
+{
+  "name": "@doc-cheap/node-red-doc-cheap",
+  "version": "0.1.0",
+  "description": "Node-RED nodes for doc.cheap – read passports, ID cards and driving licences into structured fields. Free: 100 documents every month, then $0.01 each",
+  "license": "MIT",
+  "homepage": "https://doc.cheap/docs",
+  "keywords": [
+    "node-red",
+    "ocr",
+    "passport",
+    "id-document",
+    "mrz",
+    "kyc",
+    "document-recognition"
+  ],
+  "author": {
+    "name": "Teoh Chin Heng",
+    "email": "admin@doc.cheap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cheap-doc/node-red-doc-cheap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cheap-doc/node-red-doc-cheap/issues"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "files": [
+    "nodes",
+    "examples"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "node-red": {
+    "version": ">=3.0.0",
+    "nodes": {
+      "doc-cheap-config": "nodes/doc-cheap-config.js",
+      "doc-cheap-recognize": "nodes/doc-cheap-recognize.js",
+      "doc-cheap-get-scan": "nodes/doc-cheap-get-scan.js",
+      "doc-cheap-delete-scan": "nodes/doc-cheap-delete-scan.js",
+      "doc-cheap-usage": "nodes/doc-cheap-usage.js"
+    }
+  },
+  "devDependencies": {
+    "vitest": "5.0.0"
+  }
+}
