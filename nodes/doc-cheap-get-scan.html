@@ -49,7 +49,10 @@
   <h3>Details</h3>
   <p>
     A result is stored only when the scan was made with a live key under a non-zero retention
-    window, and only until that window ends. Under the sandbox key nothing is stored, so the
+    window, and only until that window ends. Under a sandbox key nothing can be read back: an account's own
+    sandbox key stores nothing, and the public key <code>sk_sandbox_public</code> keeps every scan
+    for one year, with a reduced thumbnail and the address it came from, where that key cannot
+    reach it. So the
     answer is "not found". Reading a result costs nothing.
   </p>
   <p>
