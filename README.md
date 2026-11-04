@@ -40,8 +40,9 @@ Every node points at a **doc-cheap-config** node that holds the account:
   [doc.cheap cabinet](https://doc.cheap/docs/concepts/api-keys-and-sessions),
   or the public sandbox key `sk_sandbox_public` to try the nodes without an
   account. The sandbox key gives 10 free recognised documents per address in
-  all, and at most 10 requests per address an hour, whatever their answer.
-  The key is sent as a Bearer token. Node-RED keeps it in its credentials
+  all, and at most 10 requests per address an hour, whatever their answer. Use
+  test images only, never a real document: it keeps a record of every scan for
+  one year. The key is sent as a Bearer token. Node-RED keeps it in its credentials
   file, so it never appears in the flow JSON or in an export.
 - **Base URL** – leave it at `https://api.doc.cheap`.
 
@@ -87,7 +88,10 @@ empty.
 
 **Stored results.** A result is stored only when the scan was made with a live
 key under a non-zero retention window, and only until that window ends. Under a
-sandbox key nothing is stored, so get scan and delete scan answer "not found".
+sandbox key nothing can be read back: an account's own sandbox key stores nothing, and the public key
+`sk_sandbox_public` keeps every scan for one year, with a reduced thumbnail and the
+address it came from, where that key cannot reach it. So get scan and delete scan
+answer "not found".
 None of get scan, delete scan or usage charges a credit.
 
 ## Errors
